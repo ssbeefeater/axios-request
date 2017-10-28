@@ -27,7 +27,7 @@ npm install axios-request-handler
 #### API
 
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
 const requestInstance = new Request(url = '', options = {
     lockable: false, // if true if you try to make a request when there is a pending one, the second will not be executed
@@ -75,7 +75,7 @@ requestInstance.setUrl(options = {}) // changes the instane's url
 Basic
 
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
 const products = new Request('http://example.com/api/products', {
     params: {
@@ -94,7 +94,7 @@ products.get({
 Polling
 
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
 const reviews = new Request('http://example.com/api/reviews');
 
@@ -105,7 +105,7 @@ reviews.poll(5000).get((response) => {
 ```
 Cancel pending requests
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
 const reviews = new Request('http://example.com/api/reviews');
 
@@ -127,7 +127,7 @@ reviews.cancel('post');
 ```
 Check request status
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
 const reviews = new Request('http://example.com/api/reviews');
 
@@ -159,7 +159,7 @@ reviews.isPolling(); //true
 Lockable, Cancelable
 
 ```javascript
-import Request from 'axios-request';
+import Request from 'axios-request-handler';
 
  // cacelable
 const reviews = new Request('http://example.com/api/reviews', {
