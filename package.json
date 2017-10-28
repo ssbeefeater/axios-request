@@ -1,6 +1,6 @@
 {
   "name": "axios-request-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Axios handler for making requests with polling, lock and cancel support.",
   "main": "dist/axios-request.js",
   "scripts": {
@@ -9,8 +9,12 @@
     "test-watch": "mocha test/mocha.conf.js test/**/*.test.js --watch",
     "cover": "nyc report"
   },
-  "author": "Mike Antoniadis",
+  "author": "Mike Antoniadis <ssbeefeater@gmail.com> (http://ssbeefeater.github.io/)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssbeefeater/axios-request.git"
+  },
   "dependencies": {
     "axios": "^0.16.2"
   },
