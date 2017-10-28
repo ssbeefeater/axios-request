@@ -1,6 +1,6 @@
 # axios-request
 
-An Axios handler for making requests with polling, lock and cancel support.
+An [axios](https://github.com/axios/axios) handler for making requests with polling, lock and cancel support.
 
 ---
 
