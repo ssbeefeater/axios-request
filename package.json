@@ -2,11 +2,9 @@
   "name": "axios-request-handler",
   "version": "1.0.0",
   "description": "An Axios handler for making requests with polling, lock and cancel support.",
-  "main": "src/index.js",
+  "main": "src/axios-request.js",
   "scripts": {
     "build": "set NODE_ENV=production & webpack -p",
-    "dev": "webpack-dev-server",
-    "start": "npm run dev",
     "test": "nyc --all mocha test/mocha.conf.js test/**/*.test.js test/**/**/*.test.js test/**/**/**/*.test.js",
     "test-watch": "mocha test/mocha.conf.js test/**/*.test.js --watch",
     "cover": "nyc report"
