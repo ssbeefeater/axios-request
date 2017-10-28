@@ -1,0 +1,32 @@
+{
+    "include": [
+        "src/**/*.js"
+    ],
+    "require": [
+        "babel-register"
+    ],
+    "reporter": [
+        "html",
+        "text"
+    ],
+    "watermarks": {
+        "lines": [
+            70,
+            90
+        ],
+        "functions": [
+            70,
+            90
+        ],
+        "branches": [
+            70,
+            90
+        ],
+        "statements": [
+            70,
+            90
+        ]
+    },
+    "sourceMap": false,
+    "instrument": false
+}
