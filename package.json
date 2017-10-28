@@ -1,0 +1,36 @@
+{
+  "name": "axios-request-handler",
+  "version": "1.0.0",
+  "description": "An Axios handler for making requests with polling, lock and cancel support.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "set NODE_ENV=production & webpack -p",
+    "dev": "webpack-dev-server",
+    "start": "npm run dev",
+    "test": "nyc --all mocha test/mocha.conf.js test/**/*.test.js test/**/**/*.test.js test/**/**/**/*.test.js",
+    "test-watch": "mocha test/mocha.conf.js test/**/*.test.js --watch",
+    "cover": "nyc report"
+  },
+  "author": "Mike Antoniadis",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-istanbul": "^4.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.3",
+    "nock": "^9.0.24",
+    "nyc": "^11.2.1",
+    "sinon": "^3.3.0",
+    "webpack": "^3.6.0"
+  }
+}
