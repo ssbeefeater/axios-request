@@ -2,7 +2,7 @@
   "name": "axios-request-handler",
   "version": "1.0.0",
   "description": "An Axios handler for making requests with polling, lock and cancel support.",
-  "main": "src/axios-request.js",
+  "main": "dist/axios-request.js",
   "scripts": {
     "build": "set NODE_ENV=production & webpack -p",
     "test": "nyc --all mocha test/mocha.conf.js test/**/*.test.js test/**/**/*.test.js test/**/**/**/*.test.js",
