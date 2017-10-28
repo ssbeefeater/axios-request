@@ -1,6 +1,6 @@
 {
   "name": "axios-request-handler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An Axios handler for making requests with polling, lock and cancel support.",
   "main": "dist/axios-request.js",
   "scripts": {
