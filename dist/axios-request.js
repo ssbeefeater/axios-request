@@ -1,8 +1,4120 @@
-!function(n,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports["axios-request"]=e():n["axios-request"]=e()}(this,function(){return function(n){function e(o){if(t[o])return t[o].exports;var l=t[o]={i:o,l:!1,exports:{}};return n[o].call(l.exports,l,l.exports,e),l.l=!0,l.exports}var t={};return e.m=n,e.c=t,e.d=function(n,t,o){e.o(n,t)||Object.defineProperty(n,t,{configurable:!1,enumerable:!0,get:o})},e.n=function(n){var t=n&&n.__esModule?function(){return n.default}:function(){return n};return e.d(t,"a",t),t},e.o=function(n,e){return Object.prototype.hasOwnProperty.call(n,e)},e.p="/",e(e.s=7)}([function(n,e,t){"use strict";function o(n){return"[object Array]"===S.call(n)}function l(n){return"[object ArrayBuffer]"===S.call(n)}function i(n){return"undefined"!=typeof FormData&&n instanceof FormData}function r(n){return"undefined"!=typeof ArrayBuffer&&ArrayBuffer.isView?ArrayBuffer.isView(n):n&&n.buffer&&n.buffer instanceof ArrayBuffer}function u(n){return"string"==typeof n}function c(n){return"number"==typeof n}function s(n){return void 0===n}function a(n){return null!==n&&"object"===(void 0===n?"undefined":T(n))}function m(n){return"[object Date]"===S.call(n)}function f(n){return"[object File]"===S.call(n)}function d(n){return"[object Blob]"===S.call(n)}function p(n){return"[object Function]"===S.call(n)}function h(n){return a(n)&&p(n.pipe)}function y(n){return"undefined"!=typeof URLSearchParams&&n instanceof URLSearchParams}function g(n){return n.replace(/^\s*/,"").replace(/\s*$/,"")}function b(){return("undefined"==typeof navigator||"ReactNative"!==navigator.product)&&"undefined"!=typeof window&&"undefined"!=typeof document}function v(n,e){if(null!==n&&void 0!==n)if("object"===(void 0===n?"undefined":T(n))||o(n)||(n=[n]),o(n))for(var t=0,l=n.length;t<l;t++)e.call(null,n[t],t,n);else for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&e.call(null,n[i],i,n)}function w(){function n(n,t){"object"===T(e[t])&&"object"===(void 0===n?"undefined":T(n))?e[t]=w(e[t],n):e[t]=n}for(var e={},t=0,o=arguments.length;t<o;t++)v(arguments[t],n);return e}function x(n,e,t){return v(e,function(e,o){n[o]=t&&"function"==typeof e?_(e,t):e}),n}var T="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(n){return typeof n}:function(n){return n&&"function"==typeof Symbol&&n.constructor===Symbol&&n!==Symbol.prototype?"symbol":typeof n},_=t(2),j=t(11),S=Object.prototype.toString;n.exports={isArray:o,isArrayBuffer:l,isBuffer:j,isFormData:i,isArrayBufferView:r,isString:u,isNumber:c,isObject:a,isUndefined:s,isDate:m,isFile:f,isBlob:d,isFunction:p,isStream:h,isURLSearchParams:y,isStandardBrowserEnv:b,forEach:v,merge:w,extend:x,trim:g}},function(n,e,t){"use strict";(function(e){function o(n,e){!l.isUndefined(n)&&l.isUndefined(n["Content-Type"])&&(n["Content-Type"]=e)}var l=t(0),i=t(14),r={"Content-Type":"application/x-www-form-urlencoded"},u={adapter:function(){var n;return"undefined"!=typeof XMLHttpRequest?n=t(3):void 0!==e&&(n=t(3)),n}(),transformRequest:[function(n,e){return i(e,"Content-Type"),l.isFormData(n)||l.isArrayBuffer(n)||l.isBuffer(n)||l.isStream(n)||l.isFile(n)||l.isBlob(n)?n:l.isArrayBufferView(n)?n.buffer:l.isURLSearchParams(n)?(o(e,"application/x-www-form-urlencoded;charset=utf-8"),n.toString()):l.isObject(n)?(o(e,"application/json;charset=utf-8"),JSON.stringify(n)):n}],transformResponse:[function(n){if("string"==typeof n)try{n=JSON.parse(n)}catch(n){}return n}],timeout:0,xsrfCookieName:"XSRF-TOKEN",xsrfHeaderName:"X-XSRF-TOKEN",maxContentLength:-1,validateStatus:function(n){return n>=200&&n<300}};u.headers={common:{Accept:"application/json, text/plain, */*"}},l.forEach(["delete","get","head"],function(n){u.headers[n]={}}),l.forEach(["post","put","patch"],function(n){u.headers[n]=l.merge(r)}),n.exports=u}).call(e,t(13))},function(n,e,t){"use strict";n.exports=function(n,e){return function(){for(var t=new Array(arguments.length),o=0;o<t.length;o++)t[o]=arguments[o];return n.apply(e,t)}}},function(n,e,t){"use strict";var o=t(0),l=t(15),i=t(17),r=t(18),u=t(19),c=t(4),s="undefined"!=typeof window&&window.btoa&&window.btoa.bind(window)||t(20);n.exports=function(n){return new Promise(function(e,a){var m=n.data,f=n.headers;o.isFormData(m)&&delete f["Content-Type"];var d=new XMLHttpRequest,p="onreadystatechange",h=!1;if("undefined"==typeof window||!window.XDomainRequest||"withCredentials"in d||u(n.url)||(d=new window.XDomainRequest,p="onload",h=!0,d.onprogress=function(){},d.ontimeout=function(){}),n.auth){var y=n.auth.username||"",g=n.auth.password||"";f.Authorization="Basic "+s(y+":"+g)}if(d.open(n.method.toUpperCase(),i(n.url,n.params,n.paramsSerializer),!0),d.timeout=n.timeout,d[p]=function(){if(d&&(4===d.readyState||h)&&(0!==d.status||d.responseURL&&0===d.responseURL.indexOf("file:"))){var t="getAllResponseHeaders"in d?r(d.getAllResponseHeaders()):null,o=n.responseType&&"text"!==n.responseType?d.response:d.responseText,i={data:o,status:1223===d.status?204:d.status,statusText:1223===d.status?"No Content":d.statusText,headers:t,config:n,request:d};l(e,a,i),d=null}},d.onerror=function(){a(c("Network Error",n,null,d)),d=null},d.ontimeout=function(){a(c("timeout of "+n.timeout+"ms exceeded",n,"ECONNABORTED",d)),d=null},o.isStandardBrowserEnv()){var b=t(21),v=(n.withCredentials||u(n.url))&&n.xsrfCookieName?b.read(n.xsrfCookieName):void 0;v&&(f[n.xsrfHeaderName]=v)}if("setRequestHeader"in d&&o.forEach(f,function(n,e){void 0===m&&"content-type"===e.toLowerCase()?delete f[e]:d.setRequestHeader(e,n)}),n.withCredentials&&(d.withCredentials=!0),n.responseType)try{d.responseType=n.responseType}catch(e){if("json"!==n.responseType)throw e}"function"==typeof n.onDownloadProgress&&d.addEventListener("progress",n.onDownloadProgress),"function"==typeof n.onUploadProgress&&d.upload&&d.upload.addEventListener("progress",n.onUploadProgress),n.cancelToken&&n.cancelToken.promise.then(function(n){d&&(d.abort(),a(n),d=null)}),void 0===m&&(m=null),d.send(m)})}},function(n,e,t){"use strict";var o=t(16);n.exports=function(n,e,t,l,i){var r=new Error(n);return o(r,e,t,l,i)}},function(n,e,t){"use strict";n.exports=function(n){return!(!n||!n.__CANCEL__)}},function(n,e,t){"use strict";function o(n){this.message=n}o.prototype.toString=function(){return"Cancel"+(this.message?": "+this.message:"")},o.prototype.__CANCEL__=!0,n.exports=o},function(n,e,t){n.exports=t(8)},function(n,e,t){"use strict";function o(n,e){var t={};for(var o in n)e.indexOf(o)>=0||Object.prototype.hasOwnProperty.call(n,o)&&(t[o]=n[o]);return t}function l(n,e){if(!(n instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var i=function(){var n="/home/mike/projects/axios-request/src/axios-request.js",e="59a64c6be56ac2c7f8f8ad25e520b8b4e5bc6060",t=new Function("return this")(),o="__coverage__",l={path:"/home/mike/projects/axios-request/src/axios-request.js",statementMap:{0:{start:{line:5,column:8},end:{line:5,column:27}},1:{start:{line:6,column:8},end:{line:6,column:32}},2:{start:{line:7,column:8},end:{line:7,column:26}},3:{start:{line:8,column:8},end:{line:8,column:27}},4:{start:{line:9,column:8},end:{line:9,column:36}},5:{start:{line:10,column:8},end:{line:13,column:10}},6:{start:{line:14,column:8},end:{line:14,column:33}},7:{start:{line:15,column:8},end:{line:15,column:25}},8:{start:{line:18,column:8},end:{line:18,column:59}},9:{start:{line:21,column:8},end:{line:21,column:23}},10:{start:{line:24,column:8},end:{line:24,column:40}},11:{start:{line:27,column:8},end:{line:40,column:9}},12:{start:{line:28,column:27},end:{line:28,column:53}},13:{start:{line:29,column:28},end:{line:29,column:49}},14:{start:{line:31,column:12},end:{line:33,column:13}},15:{start:{line:32,column:16},end:{line:32,column:25}},16:{start:{line:34,column:12},end:{line:36,column:13}},17:{start:{line:35,column:16},end:{line:35,column:38}},18:{start:{line:38,column:12},end:{line:38,column:100}},19:{start:{line:38,column:66},end:{line:38,column:97}},20:{start:{line:39,column:12},end:{line:39,column:102}},21:{start:{line:39,column:61},end:{line:39,column:99}},22:{start:{line:41,column:8},end:{line:41,column:20}},23:{start:{line:44,column:8},end:{line:46,column:9}},24:{start:{line:45,column:12},end:{line:45,column:42}},25:{start:{line:47,column:8},end:{line:47,column:92}},26:{start:{line:47,column:63},end:{line:47,column:90}},27:{start:{line:50,column:8},end:{line:52,column:9}},28:{start:{line:51,column:12},end:{line:51,column:52}},29:{start:{line:53,column:8},end:{line:53,column:112}},30:{start:{line:53,column:73},end:{line:53,column:110}},31:{start:{line:56,column:8},end:{line:58,column:9}},32:{start:{line:57,column:12},end:{line:57,column:43}},33:{start:{line:59,column:8},end:{line:59,column:96}},34:{start:{line:59,column:65},end:{line:59,column:94}},35:{start:{line:62,column:8},end:{line:62,column:37}},36:{start:{line:63,column:8},end:{line:63,column:38}},37:{start:{line:66,column:8},end:{line:66,column:41}},38:{start:{line:67,column:8},end:{line:67,column:24}},39:{start:{line:70,column:8},end:{line:70,column:41}},40:{start:{line:71,column:8},end:{line:71,column:47}},41:{start:{line:72,column:8},end:{line:76,column:9}},42:{start:{line:73,column:12},end:{line:73,column:53}},43:{start:{line:75,column:12},end:{line:75,column:24}},44:{start:{line:78,column:20},end:{line:81,column:5}},45:{start:{line:79,column:30},end:{line:79,column:75}},46:{start:{line:80,column:31},end:{line:80,column:77}},47:{start:{line:82,column:21},end:{line:82,column:53}},48:{start:{line:83,column:22},end:{line:83,column:55}},49:{start:{line:85,column:8},end:{line:100,column:10}},50:{start:{line:86,column:12},end:{line:86,column:50}},51:{start:{line:88,column:12},end:{line:90,column:13}},52:{start:{line:89,column:16},end:{line:89,column:47}},53:{start:{line:91,column:12},end:{line:98,column:13}},54:{start:{line:92,column:32},end:{line:94,column:24}},55:{start:{line:93,column:20},end:{line:93,column:73}},56:{start:{line:95,column:16},end:{line:95,column:49}},57:{start:{line:97,column:16},end:{line:97,column:55}},58:{start:{line:99,column:12},end:{line:99,column:28}},59:{start:{line:106,column:12},end:{line:106,column:52}},60:{start:{line:107,column:8},end:{line:109,column:9}},61:{start:{line:108,column:12},end:{line:108,column:68}},62:{start:{line:110,column:8},end:{line:112,column:9}},63:{start:{line:111,column:12},end:{line:111,column:32}},64:{start:{line:113,column:8},end:{line:113,column:43}},65:{start:{line:114,column:8},end:{line:114,column:36}},66:{start:{line:115,column:8},end:{line:124,column:70}},67:{start:{line:120,column:16},end:{line:120,column:47}},68:{start:{line:123,column:25},end:{line:123,column:66}},69:{start:{line:124,column:26},end:{line:124,column:68}}},fnMap:{0:{name:"(anonymous_0)",decl:{start:{line:4,column:4},end:{line:4,column:5}},loc:{start:{line:4,column:35},end:{line:16,column:5}},line:4},1:{name:"(anonymous_1)",decl:{start:{line:17,column:17},end:{line:17,column:18}},loc:{start:{line:17,column:30},end:{line:19,column:5}},line:17},2:{name:"(anonymous_2)",decl:{start:{line:20,column:13},end:{line:20,column:14}},loc:{start:{line:20,column:22},end:{line:22,column:5}},line:20},3:{name:"(anonymous_3)",decl:{start:{line:23,column:17},end:{line:23,column:18}},loc:{start:{line:23,column:38},end:{line:25,column:5}},line:23},4:{name:"(anonymous_4)",decl:{start:{line:26,column:13},end:{line:26,column:14}},loc:{start:{line:26,column:25},end:{line:42,column:5}},line:26},5:{name:"(anonymous_5)",decl:{start:{line:38,column:52},end:{line:38,column:53}},loc:{start:{line:38,column:66},end:{line:38,column:97}},line:38},6:{name:"(anonymous_6)",decl:{start:{line:39,column:47},end:{line:39,column:48}},loc:{start:{line:39,column:61},end:{line:39,column:99}},line:39},7:{name:"(anonymous_7)",decl:{start:{line:43,column:16},end:{line:43,column:17}},loc:{start:{line:43,column:28},end:{line:48,column:5}},line:43},8:{name:"(anonymous_8)",decl:{start:{line:47,column:46},end:{line:47,column:47}},loc:{start:{line:47,column:63},end:{line:47,column:90}},line:47},9:{name:"(anonymous_9)",decl:{start:{line:49,column:16},end:{line:49,column:17}},loc:{start:{line:49,column:28},end:{line:54,column:5}},line:49},10:{name:"(anonymous_10)",decl:{start:{line:53,column:56},end:{line:53,column:57}},loc:{start:{line:53,column:73},end:{line:53,column:110}},line:53},11:{name:"(anonymous_11)",decl:{start:{line:55,column:17},end:{line:55,column:18}},loc:{start:{line:55,column:29},end:{line:60,column:5}},line:55},12:{name:"(anonymous_12)",decl:{start:{line:59,column:47},end:{line:59,column:48}},loc:{start:{line:59,column:65},end:{line:59,column:94}},line:59},13:{name:"(anonymous_13)",decl:{start:{line:61,column:26},end:{line:61,column:27}},loc:{start:{line:61,column:38},end:{line:64,column:5}},line:61},14:{name:"(anonymous_14)",decl:{start:{line:65,column:30},end:{line:65,column:31}},loc:{start:{line:65,column:52},end:{line:68,column:5}},line:65},15:{name:"(anonymous_15)",decl:{start:{line:69,column:31},end:{line:69,column:32}},loc:{start:{line:69,column:50},end:{line:77,column:5}},line:69},16:{name:"(anonymous_16)",decl:{start:{line:78,column:11},end:{line:78,column:12}},loc:{start:{line:78,column:20},end:{line:81,column:5}},line:78},17:{name:"(anonymous_17)",decl:{start:{line:79,column:13},end:{line:79,column:14}},loc:{start:{line:79,column:30},end:{line:79,column:75}},line:79},18:{name:"(anonymous_18)",decl:{start:{line:80,column:14},end:{line:80,column:15}},loc:{start:{line:80,column:31},end:{line:80,column:77}},line:80},19:{name:"(anonymous_19)",decl:{start:{line:82,column:10},end:{line:82,column:11}},loc:{start:{line:82,column:21},end:{line:82,column:53}},line:82},20:{name:"(anonymous_20)",decl:{start:{line:83,column:11},end:{line:83,column:12}},loc:{start:{line:83,column:22},end:{line:83,column:55}},line:83},21:{name:"(anonymous_21)",decl:{start:{line:84,column:21},end:{line:84,column:22}},loc:{start:{line:85,column:8},end:{line:100,column:10}},line:85},22:{name:"(anonymous_22)",decl:{start:{line:85,column:57},end:{line:85,column:58}},loc:{start:{line:85,column:71},end:{line:100,column:9}},line:85},23:{name:"(anonymous_23)",decl:{start:{line:92,column:43},end:{line:92,column:44}},loc:{start:{line:92,column:49},end:{line:94,column:17}},line:92},24:{name:"(anonymous_24)",decl:{start:{line:101,column:18},end:{line:101,column:19}},loc:{start:{line:101,column:54},end:{line:125,column:5}},line:101},25:{name:"(anonymous_25)",decl:{start:{line:119,column:47},end:{line:119,column:48}},loc:{start:{line:119,column:54},end:{line:121,column:13}},line:119},26:{name:"(anonymous_26)",decl:{start:{line:123,column:18},end:{line:123,column:19}},loc:{start:{line:123,column:25},end:{line:123,column:66}},line:123},27:{name:"(anonymous_27)",decl:{start:{line:124,column:19},end:{line:124,column:20}},loc:{start:{line:124,column:26},end:{line:124,column:68}},line:124}},branchMap:{0:{loc:{start:{line:4,column:21},end:{line:4,column:33}},type:"default-arg",locations:[{start:{line:4,column:31},end:{line:4,column:33}}],line:4},1:{loc:{start:{line:27,column:8},end:{line:40,column:9}},type:"if",locations:[{start:{line:27,column:8},end:{line:40,column:9}},{start:{line:27,column:8},end:{line:40,column:9}}],line:27},2:{loc:{start:{line:31,column:12},end:{line:33,column:13}},type:"if",locations:[{start:{line:31,column:12},end:{line:33,column:13}},{start:{line:31,column:12},end:{line:33,column:13}}],line:31},3:{loc:{start:{line:34,column:12},end:{line:36,column:13}},type:"if",locations:[{start:{line:34,column:12},end:{line:36,column:13}},{start:{line:34,column:12},end:{line:36,column:13}}],line:34},4:{loc:{start:{line:44,column:8},end:{line:46,column:9}},type:"if",locations:[{start:{line:44,column:8},end:{line:46,column:9}},{start:{line:44,column:8},end:{line:46,column:9}}],line:44},5:{loc:{start:{line:50,column:8},end:{line:52,column:9}},type:"if",locations:[{start:{line:50,column:8},end:{line:52,column:9}},{start:{line:50,column:8},end:{line:52,column:9}}],line:50},6:{loc:{start:{line:56,column:8},end:{line:58,column:9}},type:"if",locations:[{start:{line:56,column:8},end:{line:58,column:9}},{start:{line:56,column:8},end:{line:58,column:9}}],line:56},7:{loc:{start:{line:72,column:8},end:{line:76,column:9}},type:"if",locations:[{start:{line:72,column:8},end:{line:76,column:9}},{start:{line:72,column:8},end:{line:76,column:9}}],line:72},8:{loc:{start:{line:88,column:12},end:{line:90,column:13}},type:"if",locations:[{start:{line:88,column:12},end:{line:90,column:13}},{start:{line:88,column:12},end:{line:90,column:13}}],line:88},9:{loc:{start:{line:91,column:12},end:{line:98,column:13}},type:"if",locations:[{start:{line:91,column:12},end:{line:98,column:13}},{start:{line:91,column:12},end:{line:98,column:13}}],line:91},10:{loc:{start:{line:91,column:16},end:{line:91,column:49}},type:"binary-expr",locations:[{start:{line:91,column:16},end:{line:91,column:20}},{start:{line:91,column:24},end:{line:91,column:49}}],line:91},11:{loc:{start:{line:101,column:27},end:{line:101,column:39}},type:"default-arg",locations:[{start:{line:101,column:37},end:{line:101,column:39}}],line:101},12:{loc:{start:{line:107,column:8},end:{line:109,column:9}},type:"if",locations:[{start:{line:107,column:8},end:{line:109,column:9}},{start:{line:107,column:8},end:{line:109,column:9}}],line:107},13:{loc:{start:{line:107,column:12},end:{line:107,column:59}},type:"binary-expr",locations:[{start:{line:107,column:12},end:{line:107,column:20}},{start:{line:107,column:24},end:{line:107,column:33}},{start:{line:107,column:37},end:{line:107,column:59}}],line:107},14:{loc:{start:{line:110,column:8},end:{line:112,column:9}},type:"if",locations:[{start:{line:110,column:8},end:{line:112,column:9}},{start:{line:110,column:8},end:{line:112,column:9}}],line:110}},s:{0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0,17:0,18:0,19:0,20:0,21:0,22:0,23:0,24:0,25:0,26:0,27:0,28:0,29:0,30:0,31:0,32:0,33:0,34:0,35:0,36:0,37:0,38:0,39:0,40:0,41:0,42:0,43:0,44:0,45:0,46:0,47:0,48:0,49:0,50:0,51:0,52:0,53:0,54:0,55:0,56:0,57:0,58:0,59:0,60:0,61:0,62:0,63:0,64:0,65:0,66:0,67:0,68:0,69:0},f:{0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0,17:0,18:0,19:0,20:0,21:0,22:0,23:0,24:0,25:0,26:0,27:0},b:{0:[0],1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0],9:[0,0],10:[0,0],11:[0],12:[0,0],13:[0,0,0],14:[0,0]},_coverageSchema:"332fd63041d2c1bcb487cc26dd0d5f7d97098a6c"},i=t[o]||(t[o]={});return i[n]&&i[n].hash===e?i[n]:(l.hash=e,i[n]=l)}(),r=Object.assign||function(n){for(var e=1;e<arguments.length;e++){var t=arguments[e];for(var o in t)Object.prototype.hasOwnProperty.call(t,o)&&(n[o]=t[o])}return n},u=t(9),c=function(n){return n&&n.__esModule?n:{default:n}}(u),s=function n(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:(i.b[0][0]++,{});l(this,n),a.call(this),i.f[0]++,i.s[0]++,this.timeouts={},i.s[1]++,this.cancelMethods={},i.s[2]++,this.pending={},i.s[3]++,this.updating={},i.s[4]++,this.pollingInProgress={},i.s[5]++,this.options={lockable:!1,cancelable:!0},i.s[6]++,this.setOptions(t),i.s[7]++,this.setUrl(e)},a=function(){var n=this;this.setOptions=function(e){i.f[1]++,i.s[8]++,n.option=Object.assign(n.options,e)},this.setUrl=function(e){i.f[2]++,i.s[9]++,n.url=e},this.setTimeout=function(e,t){i.f[3]++,i.s[10]++,n.timeouts[t]=e},this.cancel=function(e){if(i.f[4]++,i.s[11]++,e){i.b[1][0]++;var t=(i.s[12]++,n.cancelMethods[e]),o=(i.s[13]++,n.timeouts[e]);i.s[14]++,"function"==typeof t?(i.b[2][0]++,i.s[15]++,t()):i.b[2][1]++,i.s[16]++,o?(i.b[3][0]++,i.s[17]++,clearTimeout(o)):i.b[3][1]++}else i.b[1][1]++,i.s[18]++,Object.keys(n.cancelMethods).forEach(function(e){return i.f[5]++,i.s[19]++,n.cancelMethods[e]()}),i.s[20]++,Object.keys(n.timeouts).forEach(function(e){return i.f[6]++,i.s[21]++,clearTimeout(n.timeouts[e])});return i.s[22]++,n},this.isPending=function(e){return i.f[7]++,i.s[23]++,e?(i.b[4][0]++,i.s[24]++,!!n.pending[e]):(i.b[4][1]++,i.s[25]++,Object.keys(n.pending).some(function(e){return i.f[8]++,i.s[26]++,n.pending[e]}))},this.isPolling=function(e){return i.f[9]++,i.s[27]++,e?(i.b[5][0]++,i.s[28]++,!!n.pollingInProgress[e]):(i.b[5][1]++,i.s[29]++,Object.keys(n.pollingInProgress).some(function(e){return i.f[10]++,i.s[30]++,n.pollingInProgress[e]}))},this.isUpdating=function(e){return i.f[11]++,i.s[31]++,e?(i.b[6][0]++,i.s[32]++,!!n.updating[e]):(i.b[6][1]++,i.s[33]++,Object.keys(n.updating).some(function(e){return i.f[12]++,i.s[34]++,n.updating[e]}))},this.setOffPendingStatus=function(e){i.f[13]++,i.s[35]++,n.pending[e]=!1,i.s[36]++,n.updating[e]=!1},this.setOffPendingStatusThen=function(e,t){return i.f[14]++,i.s[37]++,n.setOffPendingStatus(t),i.s[38]++,e},this.setOffPendingStatusCatch=function(e,t){if(i.f[15]++,i.s[39]++,n.setOffPendingStatus(t),i.s[40]++,n.pollingInProgress[t]=!1,i.s[41]++,!n.options.errorHandler)throw i.b[7][1]++,i.s[43]++,e;i.b[7][0]++,i.s[42]++,n.options.errorHandler(e,t)},this.poll=function(e){return i.f[16]++,i.s[44]++,{get:function(t,o){return i.f[17]++,i.s[45]++,n.pollingRequest(t,o,e,"get")},post:function(t,o){return i.f[18]++,i.s[46]++,n.pollingRequest(t,o,e,"post")}}},this.get=function(e){return i.f[19]++,i.s[47]++,n.sendRequest("get",e)},this.post=function(e){return i.f[20]++,i.s[48]++,n.sendRequest("post",e)},this.pollingRequest=function(e,t,o,l,r){return i.f[21]++,i.s[49]++,n.sendRequest(l,t,r).then(function(r){i.f[22]++,i.s[50]++,n.pollingInProgress[l]=!0;var u=void 0;if(i.s[51]++,e?(i.b[8][0]++,i.s[52]++,u=e(r)):i.b[8][1]++,i.s[53]++,i.b[10][0]++,o&&(i.b[10][1]++,!1!==u)){i.b[9][0]++;var c=(i.s[54]++,setTimeout(function(){i.f[23]++,i.s[55]++,n.pollingRequest(e,t,o,l,!0)},o));i.s[56]++,n.setTimeout(c,l)}else i.b[9][1]++,i.s[57]++,n.pollingInProgress[l]=!1;return i.s[58]++,r})},this.sendRequest=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:(i.b[11][0]++,{}),l=arguments[2];i.f[24]++;var u=(i.s[59]++,Object.assign({},n.options,t)),s=u.lockable,a=u.cancelable,m=o(u,["lockable","cancelable"]);return i.s[60]++,i.b[13][0]++,s&&(i.b[13][1]++,!l)&&(i.b[13][2]++,n.isPending(e))?(i.b[12][0]++,i.s[61]++,Promise.reject(new Error("Request in progress"))):(i.b[12][1]++,i.s[62]++,a?(i.b[14][0]++,i.s[63]++,n.cancel(e)):i.b[14][1]++,i.s[64]++,n.updating[e]=!!l,i.s[65]++,n.pending[e]=!0,i.s[66]++,(0,c.default)(r({},m,{method:e,url:n.url,cancelToken:new c.default.CancelToken(function(t){i.f[25]++,i.s[67]++,n.cancelMethods[e]=t})})).then(function(t){return i.f[26]++,i.s[68]++,n.setOffPendingStatusThen(t,e)}).catch(function(t){return i.f[27]++,i.s[69]++,n.setOffPendingStatusCatch(t,e)}))}};e.default=s},function(n,e,t){"use strict";n.exports=t(10)},function(n,e,t){"use strict";function o(n){var e=new r(n),t=i(r.prototype.request,e);return l.extend(t,r.prototype,e),l.extend(t,e),t}var l=t(0),i=t(2),r=t(12),u=t(1),c=o(u);c.Axios=r,c.create=function(n){return o(l.merge(u,n))},c.Cancel=t(6),c.CancelToken=t(27),c.isCancel=t(5),c.all=function(n){return Promise.all(n)},c.spread=t(28),n.exports=c,n.exports.default=c},function(n,e,t){"use strict";function o(n){return!!n.constructor&&"function"==typeof n.constructor.isBuffer&&n.constructor.isBuffer(n)}function l(n){return"function"==typeof n.readFloatLE&&"function"==typeof n.slice&&o(n.slice(0,0))}/*!
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["axios-request"] = factory();
+	else
+		root["axios-request"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var bind = __webpack_require__(2);
+var isBuffer = __webpack_require__(11);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return typeof FormData !== 'undefined' && val instanceof FormData;
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = val && val.buffer && val.buffer instanceof ArrayBuffer;
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return typeof window !== 'undefined' && typeof document !== 'undefined';
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' && !isArray(obj)) {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge() /* obj1, obj2, obj3, ... */{
+  var result = {};
+  function assignValue(val, key) {
+    if (_typeof(result[key]) === 'object' && (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(14);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(3);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(3);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) || utils.isArrayBuffer(data) || utils.isBuffer(data) || utils.isStream(data) || utils.isFile(data) || utils.isBlob(data)) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {/* Ignore */}
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(15);
+var buildURL = __webpack_require__(17);
+var parseHeaders = __webpack_require__(18);
+var isURLSameOrigin = __webpack_require__(19);
+var createError = __webpack_require__(4);
+var btoa = typeof window !== 'undefined' && window.btoa && window.btoa.bind(window) || __webpack_require__(20);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' && typeof window !== 'undefined' && window.XDomainRequest && !('withCredentials' in request) && !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || request.readyState !== 4 && !xDomain) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(21);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(16);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var cov_15j8tpybze = function () {
+    var path = '/home/mike/projects/axios-request/src/axios-request.js',
+        hash = '59a64c6be56ac2c7f8f8ad25e520b8b4e5bc6060',
+        global = new Function('return this')(),
+        gcv = '__coverage__',
+        coverageData = {
+        path: '/home/mike/projects/axios-request/src/axios-request.js',
+        statementMap: {
+            '0': {
+                start: {
+                    line: 5,
+                    column: 8
+                },
+                end: {
+                    line: 5,
+                    column: 27
+                }
+            },
+            '1': {
+                start: {
+                    line: 6,
+                    column: 8
+                },
+                end: {
+                    line: 6,
+                    column: 32
+                }
+            },
+            '2': {
+                start: {
+                    line: 7,
+                    column: 8
+                },
+                end: {
+                    line: 7,
+                    column: 26
+                }
+            },
+            '3': {
+                start: {
+                    line: 8,
+                    column: 8
+                },
+                end: {
+                    line: 8,
+                    column: 27
+                }
+            },
+            '4': {
+                start: {
+                    line: 9,
+                    column: 8
+                },
+                end: {
+                    line: 9,
+                    column: 36
+                }
+            },
+            '5': {
+                start: {
+                    line: 10,
+                    column: 8
+                },
+                end: {
+                    line: 13,
+                    column: 10
+                }
+            },
+            '6': {
+                start: {
+                    line: 14,
+                    column: 8
+                },
+                end: {
+                    line: 14,
+                    column: 33
+                }
+            },
+            '7': {
+                start: {
+                    line: 15,
+                    column: 8
+                },
+                end: {
+                    line: 15,
+                    column: 25
+                }
+            },
+            '8': {
+                start: {
+                    line: 18,
+                    column: 8
+                },
+                end: {
+                    line: 18,
+                    column: 59
+                }
+            },
+            '9': {
+                start: {
+                    line: 21,
+                    column: 8
+                },
+                end: {
+                    line: 21,
+                    column: 23
+                }
+            },
+            '10': {
+                start: {
+                    line: 24,
+                    column: 8
+                },
+                end: {
+                    line: 24,
+                    column: 40
+                }
+            },
+            '11': {
+                start: {
+                    line: 27,
+                    column: 8
+                },
+                end: {
+                    line: 40,
+                    column: 9
+                }
+            },
+            '12': {
+                start: {
+                    line: 28,
+                    column: 27
+                },
+                end: {
+                    line: 28,
+                    column: 53
+                }
+            },
+            '13': {
+                start: {
+                    line: 29,
+                    column: 28
+                },
+                end: {
+                    line: 29,
+                    column: 49
+                }
+            },
+            '14': {
+                start: {
+                    line: 31,
+                    column: 12
+                },
+                end: {
+                    line: 33,
+                    column: 13
+                }
+            },
+            '15': {
+                start: {
+                    line: 32,
+                    column: 16
+                },
+                end: {
+                    line: 32,
+                    column: 25
+                }
+            },
+            '16': {
+                start: {
+                    line: 34,
+                    column: 12
+                },
+                end: {
+                    line: 36,
+                    column: 13
+                }
+            },
+            '17': {
+                start: {
+                    line: 35,
+                    column: 16
+                },
+                end: {
+                    line: 35,
+                    column: 38
+                }
+            },
+            '18': {
+                start: {
+                    line: 38,
+                    column: 12
+                },
+                end: {
+                    line: 38,
+                    column: 100
+                }
+            },
+            '19': {
+                start: {
+                    line: 38,
+                    column: 66
+                },
+                end: {
+                    line: 38,
+                    column: 97
+                }
+            },
+            '20': {
+                start: {
+                    line: 39,
+                    column: 12
+                },
+                end: {
+                    line: 39,
+                    column: 102
+                }
+            },
+            '21': {
+                start: {
+                    line: 39,
+                    column: 61
+                },
+                end: {
+                    line: 39,
+                    column: 99
+                }
+            },
+            '22': {
+                start: {
+                    line: 41,
+                    column: 8
+                },
+                end: {
+                    line: 41,
+                    column: 20
+                }
+            },
+            '23': {
+                start: {
+                    line: 44,
+                    column: 8
+                },
+                end: {
+                    line: 46,
+                    column: 9
+                }
+            },
+            '24': {
+                start: {
+                    line: 45,
+                    column: 12
+                },
+                end: {
+                    line: 45,
+                    column: 42
+                }
+            },
+            '25': {
+                start: {
+                    line: 47,
+                    column: 8
+                },
+                end: {
+                    line: 47,
+                    column: 92
+                }
+            },
+            '26': {
+                start: {
+                    line: 47,
+                    column: 63
+                },
+                end: {
+                    line: 47,
+                    column: 90
+                }
+            },
+            '27': {
+                start: {
+                    line: 50,
+                    column: 8
+                },
+                end: {
+                    line: 52,
+                    column: 9
+                }
+            },
+            '28': {
+                start: {
+                    line: 51,
+                    column: 12
+                },
+                end: {
+                    line: 51,
+                    column: 52
+                }
+            },
+            '29': {
+                start: {
+                    line: 53,
+                    column: 8
+                },
+                end: {
+                    line: 53,
+                    column: 112
+                }
+            },
+            '30': {
+                start: {
+                    line: 53,
+                    column: 73
+                },
+                end: {
+                    line: 53,
+                    column: 110
+                }
+            },
+            '31': {
+                start: {
+                    line: 56,
+                    column: 8
+                },
+                end: {
+                    line: 58,
+                    column: 9
+                }
+            },
+            '32': {
+                start: {
+                    line: 57,
+                    column: 12
+                },
+                end: {
+                    line: 57,
+                    column: 43
+                }
+            },
+            '33': {
+                start: {
+                    line: 59,
+                    column: 8
+                },
+                end: {
+                    line: 59,
+                    column: 96
+                }
+            },
+            '34': {
+                start: {
+                    line: 59,
+                    column: 65
+                },
+                end: {
+                    line: 59,
+                    column: 94
+                }
+            },
+            '35': {
+                start: {
+                    line: 62,
+                    column: 8
+                },
+                end: {
+                    line: 62,
+                    column: 37
+                }
+            },
+            '36': {
+                start: {
+                    line: 63,
+                    column: 8
+                },
+                end: {
+                    line: 63,
+                    column: 38
+                }
+            },
+            '37': {
+                start: {
+                    line: 66,
+                    column: 8
+                },
+                end: {
+                    line: 66,
+                    column: 41
+                }
+            },
+            '38': {
+                start: {
+                    line: 67,
+                    column: 8
+                },
+                end: {
+                    line: 67,
+                    column: 24
+                }
+            },
+            '39': {
+                start: {
+                    line: 70,
+                    column: 8
+                },
+                end: {
+                    line: 70,
+                    column: 41
+                }
+            },
+            '40': {
+                start: {
+                    line: 71,
+                    column: 8
+                },
+                end: {
+                    line: 71,
+                    column: 47
+                }
+            },
+            '41': {
+                start: {
+                    line: 72,
+                    column: 8
+                },
+                end: {
+                    line: 76,
+                    column: 9
+                }
+            },
+            '42': {
+                start: {
+                    line: 73,
+                    column: 12
+                },
+                end: {
+                    line: 73,
+                    column: 53
+                }
+            },
+            '43': {
+                start: {
+                    line: 75,
+                    column: 12
+                },
+                end: {
+                    line: 75,
+                    column: 24
+                }
+            },
+            '44': {
+                start: {
+                    line: 78,
+                    column: 20
+                },
+                end: {
+                    line: 81,
+                    column: 5
+                }
+            },
+            '45': {
+                start: {
+                    line: 79,
+                    column: 30
+                },
+                end: {
+                    line: 79,
+                    column: 75
+                }
+            },
+            '46': {
+                start: {
+                    line: 80,
+                    column: 31
+                },
+                end: {
+                    line: 80,
+                    column: 77
+                }
+            },
+            '47': {
+                start: {
+                    line: 82,
+                    column: 21
+                },
+                end: {
+                    line: 82,
+                    column: 53
+                }
+            },
+            '48': {
+                start: {
+                    line: 83,
+                    column: 22
+                },
+                end: {
+                    line: 83,
+                    column: 55
+                }
+            },
+            '49': {
+                start: {
+                    line: 85,
+                    column: 8
+                },
+                end: {
+                    line: 100,
+                    column: 10
+                }
+            },
+            '50': {
+                start: {
+                    line: 86,
+                    column: 12
+                },
+                end: {
+                    line: 86,
+                    column: 50
+                }
+            },
+            '51': {
+                start: {
+                    line: 88,
+                    column: 12
+                },
+                end: {
+                    line: 90,
+                    column: 13
+                }
+            },
+            '52': {
+                start: {
+                    line: 89,
+                    column: 16
+                },
+                end: {
+                    line: 89,
+                    column: 47
+                }
+            },
+            '53': {
+                start: {
+                    line: 91,
+                    column: 12
+                },
+                end: {
+                    line: 98,
+                    column: 13
+                }
+            },
+            '54': {
+                start: {
+                    line: 92,
+                    column: 32
+                },
+                end: {
+                    line: 94,
+                    column: 24
+                }
+            },
+            '55': {
+                start: {
+                    line: 93,
+                    column: 20
+                },
+                end: {
+                    line: 93,
+                    column: 73
+                }
+            },
+            '56': {
+                start: {
+                    line: 95,
+                    column: 16
+                },
+                end: {
+                    line: 95,
+                    column: 49
+                }
+            },
+            '57': {
+                start: {
+                    line: 97,
+                    column: 16
+                },
+                end: {
+                    line: 97,
+                    column: 55
+                }
+            },
+            '58': {
+                start: {
+                    line: 99,
+                    column: 12
+                },
+                end: {
+                    line: 99,
+                    column: 28
+                }
+            },
+            '59': {
+                start: {
+                    line: 106,
+                    column: 12
+                },
+                end: {
+                    line: 106,
+                    column: 52
+                }
+            },
+            '60': {
+                start: {
+                    line: 107,
+                    column: 8
+                },
+                end: {
+                    line: 109,
+                    column: 9
+                }
+            },
+            '61': {
+                start: {
+                    line: 108,
+                    column: 12
+                },
+                end: {
+                    line: 108,
+                    column: 68
+                }
+            },
+            '62': {
+                start: {
+                    line: 110,
+                    column: 8
+                },
+                end: {
+                    line: 112,
+                    column: 9
+                }
+            },
+            '63': {
+                start: {
+                    line: 111,
+                    column: 12
+                },
+                end: {
+                    line: 111,
+                    column: 32
+                }
+            },
+            '64': {
+                start: {
+                    line: 113,
+                    column: 8
+                },
+                end: {
+                    line: 113,
+                    column: 43
+                }
+            },
+            '65': {
+                start: {
+                    line: 114,
+                    column: 8
+                },
+                end: {
+                    line: 114,
+                    column: 36
+                }
+            },
+            '66': {
+                start: {
+                    line: 115,
+                    column: 8
+                },
+                end: {
+                    line: 124,
+                    column: 70
+                }
+            },
+            '67': {
+                start: {
+                    line: 120,
+                    column: 16
+                },
+                end: {
+                    line: 120,
+                    column: 47
+                }
+            },
+            '68': {
+                start: {
+                    line: 123,
+                    column: 25
+                },
+                end: {
+                    line: 123,
+                    column: 66
+                }
+            },
+            '69': {
+                start: {
+                    line: 124,
+                    column: 26
+                },
+                end: {
+                    line: 124,
+                    column: 68
+                }
+            }
+        },
+        fnMap: {
+            '0': {
+                name: '(anonymous_0)',
+                decl: {
+                    start: {
+                        line: 4,
+                        column: 4
+                    },
+                    end: {
+                        line: 4,
+                        column: 5
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 4,
+                        column: 35
+                    },
+                    end: {
+                        line: 16,
+                        column: 5
+                    }
+                },
+                line: 4
+            },
+            '1': {
+                name: '(anonymous_1)',
+                decl: {
+                    start: {
+                        line: 17,
+                        column: 17
+                    },
+                    end: {
+                        line: 17,
+                        column: 18
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 17,
+                        column: 30
+                    },
+                    end: {
+                        line: 19,
+                        column: 5
+                    }
+                },
+                line: 17
+            },
+            '2': {
+                name: '(anonymous_2)',
+                decl: {
+                    start: {
+                        line: 20,
+                        column: 13
+                    },
+                    end: {
+                        line: 20,
+                        column: 14
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 20,
+                        column: 22
+                    },
+                    end: {
+                        line: 22,
+                        column: 5
+                    }
+                },
+                line: 20
+            },
+            '3': {
+                name: '(anonymous_3)',
+                decl: {
+                    start: {
+                        line: 23,
+                        column: 17
+                    },
+                    end: {
+                        line: 23,
+                        column: 18
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 23,
+                        column: 38
+                    },
+                    end: {
+                        line: 25,
+                        column: 5
+                    }
+                },
+                line: 23
+            },
+            '4': {
+                name: '(anonymous_4)',
+                decl: {
+                    start: {
+                        line: 26,
+                        column: 13
+                    },
+                    end: {
+                        line: 26,
+                        column: 14
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 26,
+                        column: 25
+                    },
+                    end: {
+                        line: 42,
+                        column: 5
+                    }
+                },
+                line: 26
+            },
+            '5': {
+                name: '(anonymous_5)',
+                decl: {
+                    start: {
+                        line: 38,
+                        column: 52
+                    },
+                    end: {
+                        line: 38,
+                        column: 53
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 38,
+                        column: 66
+                    },
+                    end: {
+                        line: 38,
+                        column: 97
+                    }
+                },
+                line: 38
+            },
+            '6': {
+                name: '(anonymous_6)',
+                decl: {
+                    start: {
+                        line: 39,
+                        column: 47
+                    },
+                    end: {
+                        line: 39,
+                        column: 48
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 39,
+                        column: 61
+                    },
+                    end: {
+                        line: 39,
+                        column: 99
+                    }
+                },
+                line: 39
+            },
+            '7': {
+                name: '(anonymous_7)',
+                decl: {
+                    start: {
+                        line: 43,
+                        column: 16
+                    },
+                    end: {
+                        line: 43,
+                        column: 17
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 43,
+                        column: 28
+                    },
+                    end: {
+                        line: 48,
+                        column: 5
+                    }
+                },
+                line: 43
+            },
+            '8': {
+                name: '(anonymous_8)',
+                decl: {
+                    start: {
+                        line: 47,
+                        column: 46
+                    },
+                    end: {
+                        line: 47,
+                        column: 47
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 47,
+                        column: 63
+                    },
+                    end: {
+                        line: 47,
+                        column: 90
+                    }
+                },
+                line: 47
+            },
+            '9': {
+                name: '(anonymous_9)',
+                decl: {
+                    start: {
+                        line: 49,
+                        column: 16
+                    },
+                    end: {
+                        line: 49,
+                        column: 17
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 49,
+                        column: 28
+                    },
+                    end: {
+                        line: 54,
+                        column: 5
+                    }
+                },
+                line: 49
+            },
+            '10': {
+                name: '(anonymous_10)',
+                decl: {
+                    start: {
+                        line: 53,
+                        column: 56
+                    },
+                    end: {
+                        line: 53,
+                        column: 57
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 53,
+                        column: 73
+                    },
+                    end: {
+                        line: 53,
+                        column: 110
+                    }
+                },
+                line: 53
+            },
+            '11': {
+                name: '(anonymous_11)',
+                decl: {
+                    start: {
+                        line: 55,
+                        column: 17
+                    },
+                    end: {
+                        line: 55,
+                        column: 18
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 55,
+                        column: 29
+                    },
+                    end: {
+                        line: 60,
+                        column: 5
+                    }
+                },
+                line: 55
+            },
+            '12': {
+                name: '(anonymous_12)',
+                decl: {
+                    start: {
+                        line: 59,
+                        column: 47
+                    },
+                    end: {
+                        line: 59,
+                        column: 48
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 59,
+                        column: 65
+                    },
+                    end: {
+                        line: 59,
+                        column: 94
+                    }
+                },
+                line: 59
+            },
+            '13': {
+                name: '(anonymous_13)',
+                decl: {
+                    start: {
+                        line: 61,
+                        column: 26
+                    },
+                    end: {
+                        line: 61,
+                        column: 27
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 61,
+                        column: 38
+                    },
+                    end: {
+                        line: 64,
+                        column: 5
+                    }
+                },
+                line: 61
+            },
+            '14': {
+                name: '(anonymous_14)',
+                decl: {
+                    start: {
+                        line: 65,
+                        column: 30
+                    },
+                    end: {
+                        line: 65,
+                        column: 31
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 65,
+                        column: 52
+                    },
+                    end: {
+                        line: 68,
+                        column: 5
+                    }
+                },
+                line: 65
+            },
+            '15': {
+                name: '(anonymous_15)',
+                decl: {
+                    start: {
+                        line: 69,
+                        column: 31
+                    },
+                    end: {
+                        line: 69,
+                        column: 32
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 69,
+                        column: 50
+                    },
+                    end: {
+                        line: 77,
+                        column: 5
+                    }
+                },
+                line: 69
+            },
+            '16': {
+                name: '(anonymous_16)',
+                decl: {
+                    start: {
+                        line: 78,
+                        column: 11
+                    },
+                    end: {
+                        line: 78,
+                        column: 12
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 78,
+                        column: 20
+                    },
+                    end: {
+                        line: 81,
+                        column: 5
+                    }
+                },
+                line: 78
+            },
+            '17': {
+                name: '(anonymous_17)',
+                decl: {
+                    start: {
+                        line: 79,
+                        column: 13
+                    },
+                    end: {
+                        line: 79,
+                        column: 14
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 79,
+                        column: 30
+                    },
+                    end: {
+                        line: 79,
+                        column: 75
+                    }
+                },
+                line: 79
+            },
+            '18': {
+                name: '(anonymous_18)',
+                decl: {
+                    start: {
+                        line: 80,
+                        column: 14
+                    },
+                    end: {
+                        line: 80,
+                        column: 15
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 80,
+                        column: 31
+                    },
+                    end: {
+                        line: 80,
+                        column: 77
+                    }
+                },
+                line: 80
+            },
+            '19': {
+                name: '(anonymous_19)',
+                decl: {
+                    start: {
+                        line: 82,
+                        column: 10
+                    },
+                    end: {
+                        line: 82,
+                        column: 11
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 82,
+                        column: 21
+                    },
+                    end: {
+                        line: 82,
+                        column: 53
+                    }
+                },
+                line: 82
+            },
+            '20': {
+                name: '(anonymous_20)',
+                decl: {
+                    start: {
+                        line: 83,
+                        column: 11
+                    },
+                    end: {
+                        line: 83,
+                        column: 12
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 83,
+                        column: 22
+                    },
+                    end: {
+                        line: 83,
+                        column: 55
+                    }
+                },
+                line: 83
+            },
+            '21': {
+                name: '(anonymous_21)',
+                decl: {
+                    start: {
+                        line: 84,
+                        column: 21
+                    },
+                    end: {
+                        line: 84,
+                        column: 22
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 85,
+                        column: 8
+                    },
+                    end: {
+                        line: 100,
+                        column: 10
+                    }
+                },
+                line: 85
+            },
+            '22': {
+                name: '(anonymous_22)',
+                decl: {
+                    start: {
+                        line: 85,
+                        column: 57
+                    },
+                    end: {
+                        line: 85,
+                        column: 58
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 85,
+                        column: 71
+                    },
+                    end: {
+                        line: 100,
+                        column: 9
+                    }
+                },
+                line: 85
+            },
+            '23': {
+                name: '(anonymous_23)',
+                decl: {
+                    start: {
+                        line: 92,
+                        column: 43
+                    },
+                    end: {
+                        line: 92,
+                        column: 44
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 92,
+                        column: 49
+                    },
+                    end: {
+                        line: 94,
+                        column: 17
+                    }
+                },
+                line: 92
+            },
+            '24': {
+                name: '(anonymous_24)',
+                decl: {
+                    start: {
+                        line: 101,
+                        column: 18
+                    },
+                    end: {
+                        line: 101,
+                        column: 19
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 101,
+                        column: 54
+                    },
+                    end: {
+                        line: 125,
+                        column: 5
+                    }
+                },
+                line: 101
+            },
+            '25': {
+                name: '(anonymous_25)',
+                decl: {
+                    start: {
+                        line: 119,
+                        column: 47
+                    },
+                    end: {
+                        line: 119,
+                        column: 48
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 119,
+                        column: 54
+                    },
+                    end: {
+                        line: 121,
+                        column: 13
+                    }
+                },
+                line: 119
+            },
+            '26': {
+                name: '(anonymous_26)',
+                decl: {
+                    start: {
+                        line: 123,
+                        column: 18
+                    },
+                    end: {
+                        line: 123,
+                        column: 19
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 123,
+                        column: 25
+                    },
+                    end: {
+                        line: 123,
+                        column: 66
+                    }
+                },
+                line: 123
+            },
+            '27': {
+                name: '(anonymous_27)',
+                decl: {
+                    start: {
+                        line: 124,
+                        column: 19
+                    },
+                    end: {
+                        line: 124,
+                        column: 20
+                    }
+                },
+                loc: {
+                    start: {
+                        line: 124,
+                        column: 26
+                    },
+                    end: {
+                        line: 124,
+                        column: 68
+                    }
+                },
+                line: 124
+            }
+        },
+        branchMap: {
+            '0': {
+                loc: {
+                    start: {
+                        line: 4,
+                        column: 21
+                    },
+                    end: {
+                        line: 4,
+                        column: 33
+                    }
+                },
+                type: 'default-arg',
+                locations: [{
+                    start: {
+                        line: 4,
+                        column: 31
+                    },
+                    end: {
+                        line: 4,
+                        column: 33
+                    }
+                }],
+                line: 4
+            },
+            '1': {
+                loc: {
+                    start: {
+                        line: 27,
+                        column: 8
+                    },
+                    end: {
+                        line: 40,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 27,
+                        column: 8
+                    },
+                    end: {
+                        line: 40,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 27,
+                        column: 8
+                    },
+                    end: {
+                        line: 40,
+                        column: 9
+                    }
+                }],
+                line: 27
+            },
+            '2': {
+                loc: {
+                    start: {
+                        line: 31,
+                        column: 12
+                    },
+                    end: {
+                        line: 33,
+                        column: 13
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 31,
+                        column: 12
+                    },
+                    end: {
+                        line: 33,
+                        column: 13
+                    }
+                }, {
+                    start: {
+                        line: 31,
+                        column: 12
+                    },
+                    end: {
+                        line: 33,
+                        column: 13
+                    }
+                }],
+                line: 31
+            },
+            '3': {
+                loc: {
+                    start: {
+                        line: 34,
+                        column: 12
+                    },
+                    end: {
+                        line: 36,
+                        column: 13
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 34,
+                        column: 12
+                    },
+                    end: {
+                        line: 36,
+                        column: 13
+                    }
+                }, {
+                    start: {
+                        line: 34,
+                        column: 12
+                    },
+                    end: {
+                        line: 36,
+                        column: 13
+                    }
+                }],
+                line: 34
+            },
+            '4': {
+                loc: {
+                    start: {
+                        line: 44,
+                        column: 8
+                    },
+                    end: {
+                        line: 46,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 44,
+                        column: 8
+                    },
+                    end: {
+                        line: 46,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 44,
+                        column: 8
+                    },
+                    end: {
+                        line: 46,
+                        column: 9
+                    }
+                }],
+                line: 44
+            },
+            '5': {
+                loc: {
+                    start: {
+                        line: 50,
+                        column: 8
+                    },
+                    end: {
+                        line: 52,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 50,
+                        column: 8
+                    },
+                    end: {
+                        line: 52,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 50,
+                        column: 8
+                    },
+                    end: {
+                        line: 52,
+                        column: 9
+                    }
+                }],
+                line: 50
+            },
+            '6': {
+                loc: {
+                    start: {
+                        line: 56,
+                        column: 8
+                    },
+                    end: {
+                        line: 58,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 56,
+                        column: 8
+                    },
+                    end: {
+                        line: 58,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 56,
+                        column: 8
+                    },
+                    end: {
+                        line: 58,
+                        column: 9
+                    }
+                }],
+                line: 56
+            },
+            '7': {
+                loc: {
+                    start: {
+                        line: 72,
+                        column: 8
+                    },
+                    end: {
+                        line: 76,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 72,
+                        column: 8
+                    },
+                    end: {
+                        line: 76,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 72,
+                        column: 8
+                    },
+                    end: {
+                        line: 76,
+                        column: 9
+                    }
+                }],
+                line: 72
+            },
+            '8': {
+                loc: {
+                    start: {
+                        line: 88,
+                        column: 12
+                    },
+                    end: {
+                        line: 90,
+                        column: 13
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 88,
+                        column: 12
+                    },
+                    end: {
+                        line: 90,
+                        column: 13
+                    }
+                }, {
+                    start: {
+                        line: 88,
+                        column: 12
+                    },
+                    end: {
+                        line: 90,
+                        column: 13
+                    }
+                }],
+                line: 88
+            },
+            '9': {
+                loc: {
+                    start: {
+                        line: 91,
+                        column: 12
+                    },
+                    end: {
+                        line: 98,
+                        column: 13
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 91,
+                        column: 12
+                    },
+                    end: {
+                        line: 98,
+                        column: 13
+                    }
+                }, {
+                    start: {
+                        line: 91,
+                        column: 12
+                    },
+                    end: {
+                        line: 98,
+                        column: 13
+                    }
+                }],
+                line: 91
+            },
+            '10': {
+                loc: {
+                    start: {
+                        line: 91,
+                        column: 16
+                    },
+                    end: {
+                        line: 91,
+                        column: 49
+                    }
+                },
+                type: 'binary-expr',
+                locations: [{
+                    start: {
+                        line: 91,
+                        column: 16
+                    },
+                    end: {
+                        line: 91,
+                        column: 20
+                    }
+                }, {
+                    start: {
+                        line: 91,
+                        column: 24
+                    },
+                    end: {
+                        line: 91,
+                        column: 49
+                    }
+                }],
+                line: 91
+            },
+            '11': {
+                loc: {
+                    start: {
+                        line: 101,
+                        column: 27
+                    },
+                    end: {
+                        line: 101,
+                        column: 39
+                    }
+                },
+                type: 'default-arg',
+                locations: [{
+                    start: {
+                        line: 101,
+                        column: 37
+                    },
+                    end: {
+                        line: 101,
+                        column: 39
+                    }
+                }],
+                line: 101
+            },
+            '12': {
+                loc: {
+                    start: {
+                        line: 107,
+                        column: 8
+                    },
+                    end: {
+                        line: 109,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 107,
+                        column: 8
+                    },
+                    end: {
+                        line: 109,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 107,
+                        column: 8
+                    },
+                    end: {
+                        line: 109,
+                        column: 9
+                    }
+                }],
+                line: 107
+            },
+            '13': {
+                loc: {
+                    start: {
+                        line: 107,
+                        column: 12
+                    },
+                    end: {
+                        line: 107,
+                        column: 59
+                    }
+                },
+                type: 'binary-expr',
+                locations: [{
+                    start: {
+                        line: 107,
+                        column: 12
+                    },
+                    end: {
+                        line: 107,
+                        column: 20
+                    }
+                }, {
+                    start: {
+                        line: 107,
+                        column: 24
+                    },
+                    end: {
+                        line: 107,
+                        column: 33
+                    }
+                }, {
+                    start: {
+                        line: 107,
+                        column: 37
+                    },
+                    end: {
+                        line: 107,
+                        column: 59
+                    }
+                }],
+                line: 107
+            },
+            '14': {
+                loc: {
+                    start: {
+                        line: 110,
+                        column: 8
+                    },
+                    end: {
+                        line: 112,
+                        column: 9
+                    }
+                },
+                type: 'if',
+                locations: [{
+                    start: {
+                        line: 110,
+                        column: 8
+                    },
+                    end: {
+                        line: 112,
+                        column: 9
+                    }
+                }, {
+                    start: {
+                        line: 110,
+                        column: 8
+                    },
+                    end: {
+                        line: 112,
+                        column: 9
+                    }
+                }],
+                line: 110
+            }
+        },
+        s: {
+            '0': 0,
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+            '6': 0,
+            '7': 0,
+            '8': 0,
+            '9': 0,
+            '10': 0,
+            '11': 0,
+            '12': 0,
+            '13': 0,
+            '14': 0,
+            '15': 0,
+            '16': 0,
+            '17': 0,
+            '18': 0,
+            '19': 0,
+            '20': 0,
+            '21': 0,
+            '22': 0,
+            '23': 0,
+            '24': 0,
+            '25': 0,
+            '26': 0,
+            '27': 0,
+            '28': 0,
+            '29': 0,
+            '30': 0,
+            '31': 0,
+            '32': 0,
+            '33': 0,
+            '34': 0,
+            '35': 0,
+            '36': 0,
+            '37': 0,
+            '38': 0,
+            '39': 0,
+            '40': 0,
+            '41': 0,
+            '42': 0,
+            '43': 0,
+            '44': 0,
+            '45': 0,
+            '46': 0,
+            '47': 0,
+            '48': 0,
+            '49': 0,
+            '50': 0,
+            '51': 0,
+            '52': 0,
+            '53': 0,
+            '54': 0,
+            '55': 0,
+            '56': 0,
+            '57': 0,
+            '58': 0,
+            '59': 0,
+            '60': 0,
+            '61': 0,
+            '62': 0,
+            '63': 0,
+            '64': 0,
+            '65': 0,
+            '66': 0,
+            '67': 0,
+            '68': 0,
+            '69': 0
+        },
+        f: {
+            '0': 0,
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+            '6': 0,
+            '7': 0,
+            '8': 0,
+            '9': 0,
+            '10': 0,
+            '11': 0,
+            '12': 0,
+            '13': 0,
+            '14': 0,
+            '15': 0,
+            '16': 0,
+            '17': 0,
+            '18': 0,
+            '19': 0,
+            '20': 0,
+            '21': 0,
+            '22': 0,
+            '23': 0,
+            '24': 0,
+            '25': 0,
+            '26': 0,
+            '27': 0
+        },
+        b: {
+            '0': [0],
+            '1': [0, 0],
+            '2': [0, 0],
+            '3': [0, 0],
+            '4': [0, 0],
+            '5': [0, 0],
+            '6': [0, 0],
+            '7': [0, 0],
+            '8': [0, 0],
+            '9': [0, 0],
+            '10': [0, 0],
+            '11': [0],
+            '12': [0, 0],
+            '13': [0, 0, 0],
+            '14': [0, 0]
+        },
+        _coverageSchema: '332fd63041d2c1bcb487cc26dd0d5f7d97098a6c'
+    },
+        coverage = global[gcv] || (global[gcv] = {});
+
+    if (coverage[path] && coverage[path].hash === hash) {
+        return coverage[path];
+    }
+
+    coverageData.hash = hash;
+    return coverage[path] = coverageData;
+}();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _axios = __webpack_require__(9);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Request = function Request(url) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (cov_15j8tpybze.b[0][0]++, {});
+
+    _classCallCheck(this, Request);
+
+    _initialiseProps.call(this);
+
+    cov_15j8tpybze.f[0]++;
+    cov_15j8tpybze.s[0]++;
+
+    this.timeouts = {};
+    cov_15j8tpybze.s[1]++;
+    this.cancelMethods = {};
+    cov_15j8tpybze.s[2]++;
+    this.pending = {};
+    cov_15j8tpybze.s[3]++;
+    this.updating = {};
+    cov_15j8tpybze.s[4]++;
+    this.pollingInProgress = {};
+    cov_15j8tpybze.s[5]++;
+    this.options = {
+        lockable: false,
+        cancelable: true
+    };
+    cov_15j8tpybze.s[6]++;
+    this.setOptions(options);
+    cov_15j8tpybze.s[7]++;
+    this.setUrl(url);
+};
+
+var _initialiseProps = function _initialiseProps() {
+    var _this = this;
+
+    this.setOptions = function (options) {
+        cov_15j8tpybze.f[1]++;
+        cov_15j8tpybze.s[8]++;
+
+        _this.option = Object.assign(_this.options, options);
+    };
+
+    this.setUrl = function (url) {
+        cov_15j8tpybze.f[2]++;
+        cov_15j8tpybze.s[9]++;
+
+        _this.url = url;
+    };
+
+    this.setTimeout = function (timeout, method) {
+        cov_15j8tpybze.f[3]++;
+        cov_15j8tpybze.s[10]++;
+
+        _this.timeouts[method] = timeout;
+    };
+
+    this.cancel = function (method) {
+        cov_15j8tpybze.f[4]++;
+        cov_15j8tpybze.s[11]++;
+
+        if (method) {
+            cov_15j8tpybze.b[1][0]++;
+
+            var cancel = (cov_15j8tpybze.s[12]++, _this.cancelMethods[method]);
+            var timeout = (cov_15j8tpybze.s[13]++, _this.timeouts[method]);
+
+            cov_15j8tpybze.s[14]++;
+            if (typeof cancel === 'function') {
+                cov_15j8tpybze.b[2][0]++;
+                cov_15j8tpybze.s[15]++;
+
+                cancel();
+            } else {
+                cov_15j8tpybze.b[2][1]++;
+            }
+            cov_15j8tpybze.s[16]++;
+            if (timeout) {
+                cov_15j8tpybze.b[3][0]++;
+                cov_15j8tpybze.s[17]++;
+
+                clearTimeout(timeout);
+            } else {
+                cov_15j8tpybze.b[3][1]++;
+            }
+        } else {
+            cov_15j8tpybze.b[1][1]++;
+            cov_15j8tpybze.s[18]++;
+
+            Object.keys(_this.cancelMethods).forEach(function (reqMethod) {
+                cov_15j8tpybze.f[5]++;
+                cov_15j8tpybze.s[19]++;
+                return _this.cancelMethods[reqMethod]();
+            });
+            cov_15j8tpybze.s[20]++;
+            Object.keys(_this.timeouts).forEach(function (reqMethod) {
+                cov_15j8tpybze.f[6]++;
+                cov_15j8tpybze.s[21]++;
+                return clearTimeout(_this.timeouts[reqMethod]);
+            });
+        }
+        cov_15j8tpybze.s[22]++;
+        return _this;
+    };
+
+    this.isPending = function (method) {
+        cov_15j8tpybze.f[7]++;
+        cov_15j8tpybze.s[23]++;
+
+        if (method) {
+            cov_15j8tpybze.b[4][0]++;
+            cov_15j8tpybze.s[24]++;
+
+            return !!_this.pending[method];
+        } else {
+            cov_15j8tpybze.b[4][1]++;
+        }
+        cov_15j8tpybze.s[25]++;
+        return Object.keys(_this.pending).some(function (pendingMethod) {
+            cov_15j8tpybze.f[8]++;
+            cov_15j8tpybze.s[26]++;
+            return _this.pending[pendingMethod];
+        });
+    };
+
+    this.isPolling = function (method) {
+        cov_15j8tpybze.f[9]++;
+        cov_15j8tpybze.s[27]++;
+
+        if (method) {
+            cov_15j8tpybze.b[5][0]++;
+            cov_15j8tpybze.s[28]++;
+
+            return !!_this.pollingInProgress[method];
+        } else {
+            cov_15j8tpybze.b[5][1]++;
+        }
+        cov_15j8tpybze.s[29]++;
+        return Object.keys(_this.pollingInProgress).some(function (pollingMethod) {
+            cov_15j8tpybze.f[10]++;
+            cov_15j8tpybze.s[30]++;
+            return _this.pollingInProgress[pollingMethod];
+        });
+    };
+
+    this.isUpdating = function (method) {
+        cov_15j8tpybze.f[11]++;
+        cov_15j8tpybze.s[31]++;
+
+        if (method) {
+            cov_15j8tpybze.b[6][0]++;
+            cov_15j8tpybze.s[32]++;
+
+            return !!_this.updating[method];
+        } else {
+            cov_15j8tpybze.b[6][1]++;
+        }
+        cov_15j8tpybze.s[33]++;
+        return Object.keys(_this.updating).some(function (updatingMethod) {
+            cov_15j8tpybze.f[12]++;
+            cov_15j8tpybze.s[34]++;
+            return _this.updating[updatingMethod];
+        });
+    };
+
+    this.setOffPendingStatus = function (method) {
+        cov_15j8tpybze.f[13]++;
+        cov_15j8tpybze.s[35]++;
+
+        _this.pending[method] = false;
+        cov_15j8tpybze.s[36]++;
+        _this.updating[method] = false;
+    };
+
+    this.setOffPendingStatusThen = function (response, method) {
+        cov_15j8tpybze.f[14]++;
+        cov_15j8tpybze.s[37]++;
+
+        _this.setOffPendingStatus(method);
+        cov_15j8tpybze.s[38]++;
+        return response;
+    };
+
+    this.setOffPendingStatusCatch = function (error, method) {
+        cov_15j8tpybze.f[15]++;
+        cov_15j8tpybze.s[39]++;
+
+        _this.setOffPendingStatus(method);
+        cov_15j8tpybze.s[40]++;
+        _this.pollingInProgress[method] = false;
+        cov_15j8tpybze.s[41]++;
+        if (_this.options.errorHandler) {
+            cov_15j8tpybze.b[7][0]++;
+            cov_15j8tpybze.s[42]++;
+
+            _this.options.errorHandler(error, method);
+        } else {
+            cov_15j8tpybze.b[7][1]++;
+            cov_15j8tpybze.s[43]++;
+
+            throw error;
+        }
+    };
+
+    this.poll = function (time) {
+        cov_15j8tpybze.f[16]++;
+        cov_15j8tpybze.s[44]++;
+        return {
+            get: function get(cl, options) {
+                cov_15j8tpybze.f[17]++;
+                cov_15j8tpybze.s[45]++;
+                return _this.pollingRequest(cl, options, time, 'get');
+            },
+            post: function post(cl, options) {
+                cov_15j8tpybze.f[18]++;
+                cov_15j8tpybze.s[46]++;
+                return _this.pollingRequest(cl, options, time, 'post');
+            }
+        };
+    };
+
+    this.get = function (options) {
+        cov_15j8tpybze.f[19]++;
+        cov_15j8tpybze.s[47]++;
+        return _this.sendRequest('get', options);
+    };
+
+    this.post = function (options) {
+        cov_15j8tpybze.f[20]++;
+        cov_15j8tpybze.s[48]++;
+        return _this.sendRequest('post', options);
+    };
+
+    this.pollingRequest = function (cl, options, time, method, updating) {
+        cov_15j8tpybze.f[21]++;
+        cov_15j8tpybze.s[49]++;
+        return _this.sendRequest(method, options, updating).then(function (response) {
+            cov_15j8tpybze.f[22]++;
+            cov_15j8tpybze.s[50]++;
+
+            _this.pollingInProgress[method] = true;
+            var continuePolling = void 0;
+            cov_15j8tpybze.s[51]++;
+            if (cl) {
+                cov_15j8tpybze.b[8][0]++;
+                cov_15j8tpybze.s[52]++;
+
+                continuePolling = cl(response);
+            } else {
+                cov_15j8tpybze.b[8][1]++;
+            }
+            cov_15j8tpybze.s[53]++;
+            if ((cov_15j8tpybze.b[10][0]++, time) && (cov_15j8tpybze.b[10][1]++, continuePolling !== false)) {
+                cov_15j8tpybze.b[9][0]++;
+
+                var timeOut = (cov_15j8tpybze.s[54]++, setTimeout(function () {
+                    cov_15j8tpybze.f[23]++;
+                    cov_15j8tpybze.s[55]++;
+
+                    _this.pollingRequest(cl, options, time, method, true);
+                }, time));
+                cov_15j8tpybze.s[56]++;
+                _this.setTimeout(timeOut, method);
+            } else {
+                cov_15j8tpybze.b[9][1]++;
+                cov_15j8tpybze.s[57]++;
+
+                _this.pollingInProgress[method] = false;
+            }
+            cov_15j8tpybze.s[58]++;
+            return response;
+        });
+    };
+
+    this.sendRequest = function (method) {
+        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (cov_15j8tpybze.b[11][0]++, {});
+        var updating = arguments[2];
+        cov_15j8tpybze.f[24]++;
+
+        var _ref = (cov_15j8tpybze.s[59]++, Object.assign({}, _this.options, options)),
+            lockable = _ref.lockable,
+            cancelable = _ref.cancelable,
+            axiosOption = _objectWithoutProperties(_ref, ['lockable', 'cancelable']);
+
+        cov_15j8tpybze.s[60]++;
+
+        if ((cov_15j8tpybze.b[13][0]++, lockable) && (cov_15j8tpybze.b[13][1]++, !updating) && (cov_15j8tpybze.b[13][2]++, _this.isPending(method))) {
+            cov_15j8tpybze.b[12][0]++;
+            cov_15j8tpybze.s[61]++;
+
+            return Promise.reject(new Error('Request in progress'));
+        } else {
+            cov_15j8tpybze.b[12][1]++;
+        }
+        cov_15j8tpybze.s[62]++;
+        if (cancelable) {
+            cov_15j8tpybze.b[14][0]++;
+            cov_15j8tpybze.s[63]++;
+
+            _this.cancel(method);
+        } else {
+            cov_15j8tpybze.b[14][1]++;
+        }
+        cov_15j8tpybze.s[64]++;
+        _this.updating[method] = !!updating;
+        cov_15j8tpybze.s[65]++;
+        _this.pending[method] = true;
+        cov_15j8tpybze.s[66]++;
+        return (0, _axios2.default)(_extends({}, axiosOption, {
+            method: method,
+            url: _this.url,
+            cancelToken: new _axios2.default.CancelToken(function (c) {
+                cov_15j8tpybze.f[25]++;
+                cov_15j8tpybze.s[67]++;
+
+                _this.cancelMethods[method] = c;
+            })
+        })).then(function (res) {
+            cov_15j8tpybze.f[26]++;
+            cov_15j8tpybze.s[68]++;
+            return _this.setOffPendingStatusThen(res, method);
+        }).catch(function (err) {
+            cov_15j8tpybze.f[27]++;
+            cov_15j8tpybze.s[69]++;
+            return _this.setOffPendingStatusCatch(err, method);
+        });
+    };
+};
+
+exports.default = Request;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(10);
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(2);
+var Axios = __webpack_require__(12);
+var defaults = __webpack_require__(1);
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(6);
+axios.CancelToken = __webpack_require__(27);
+axios.isCancel = __webpack_require__(5);
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(28);
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*!
  * Determine if an object is a Buffer
  *
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
  * @license  MIT
  */
-n.exports=function(n){return null!=n&&(o(n)||l(n)||!!n._isBuffer)}},function(n,e,t){"use strict";function o(n){this.defaults=n,this.interceptors={request:new r,response:new r}}var l=t(1),i=t(0),r=t(22),u=t(23),c=t(25),s=t(26);o.prototype.request=function(n){"string"==typeof n&&(n=i.merge({url:arguments[0]},arguments[1])),n=i.merge(l,this.defaults,{method:"get"},n),n.method=n.method.toLowerCase(),n.baseURL&&!c(n.url)&&(n.url=s(n.baseURL,n.url));var e=[u,void 0],t=Promise.resolve(n);for(this.interceptors.request.forEach(function(n){e.unshift(n.fulfilled,n.rejected)}),this.interceptors.response.forEach(function(n){e.push(n.fulfilled,n.rejected)});e.length;)t=t.then(e.shift(),e.shift());return t},i.forEach(["delete","get","head","options"],function(n){o.prototype[n]=function(e,t){return this.request(i.merge(t||{},{method:n,url:e}))}}),i.forEach(["post","put","patch"],function(n){o.prototype[n]=function(e,t,o){return this.request(i.merge(o||{},{method:n,url:e,data:t}))}}),n.exports=o},function(n,e,t){"use strict";function o(){throw new Error("setTimeout has not been defined")}function l(){throw new Error("clearTimeout has not been defined")}function i(n){if(m===setTimeout)return setTimeout(n,0);if((m===o||!m)&&setTimeout)return m=setTimeout,setTimeout(n,0);try{return m(n,0)}catch(e){try{return m.call(null,n,0)}catch(e){return m.call(this,n,0)}}}function r(n){if(f===clearTimeout)return clearTimeout(n);if((f===l||!f)&&clearTimeout)return f=clearTimeout,clearTimeout(n);try{return f(n)}catch(e){try{return f.call(null,n)}catch(e){return f.call(this,n)}}}function u(){y&&p&&(y=!1,p.length?h=p.concat(h):g=-1,h.length&&c())}function c(){if(!y){var n=i(u);y=!0;for(var e=h.length;e;){for(p=h,h=[];++g<e;)p&&p[g].run();g=-1,e=h.length}p=null,y=!1,r(n)}}function s(n,e){this.fun=n,this.array=e}function a(){}var m,f,d=n.exports={};!function(){try{m="function"==typeof setTimeout?setTimeout:o}catch(n){m=o}try{f="function"==typeof clearTimeout?clearTimeout:l}catch(n){f=l}}();var p,h=[],y=!1,g=-1;d.nextTick=function(n){var e=new Array(arguments.length-1);if(arguments.length>1)for(var t=1;t<arguments.length;t++)e[t-1]=arguments[t];h.push(new s(n,e)),1!==h.length||y||i(c)},s.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=a,d.addListener=a,d.once=a,d.off=a,d.removeListener=a,d.removeAllListeners=a,d.emit=a,d.prependListener=a,d.prependOnceListener=a,d.listeners=function(n){return[]},d.binding=function(n){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(n){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}},function(n,e,t){"use strict";var o=t(0);n.exports=function(n,e){o.forEach(n,function(t,o){o!==e&&o.toUpperCase()===e.toUpperCase()&&(n[e]=t,delete n[o])})}},function(n,e,t){"use strict";var o=t(4);n.exports=function(n,e,t){var l=t.config.validateStatus;t.status&&l&&!l(t.status)?e(o("Request failed with status code "+t.status,t.config,null,t.request,t)):n(t)}},function(n,e,t){"use strict";n.exports=function(n,e,t,o,l){return n.config=e,t&&(n.code=t),n.request=o,n.response=l,n}},function(n,e,t){"use strict";function o(n){return encodeURIComponent(n).replace(/%40/gi,"@").replace(/%3A/gi,":").replace(/%24/g,"$").replace(/%2C/gi,",").replace(/%20/g,"+").replace(/%5B/gi,"[").replace(/%5D/gi,"]")}var l=t(0);n.exports=function(n,e,t){if(!e)return n;var i;if(t)i=t(e);else if(l.isURLSearchParams(e))i=e.toString();else{var r=[];l.forEach(e,function(n,e){null!==n&&void 0!==n&&(l.isArray(n)&&(e+="[]"),l.isArray(n)||(n=[n]),l.forEach(n,function(n){l.isDate(n)?n=n.toISOString():l.isObject(n)&&(n=JSON.stringify(n)),r.push(o(e)+"="+o(n))}))}),i=r.join("&")}return i&&(n+=(-1===n.indexOf("?")?"?":"&")+i),n}},function(n,e,t){"use strict";var o=t(0);n.exports=function(n){var e,t,l,i={};return n?(o.forEach(n.split("\n"),function(n){l=n.indexOf(":"),e=o.trim(n.substr(0,l)).toLowerCase(),t=o.trim(n.substr(l+1)),e&&(i[e]=i[e]?i[e]+", "+t:t)}),i):i}},function(n,e,t){"use strict";var o=t(0);n.exports=o.isStandardBrowserEnv()?function(){function n(n){var e=n;return t&&(l.setAttribute("href",e),e=l.href),l.setAttribute("href",e),{href:l.href,protocol:l.protocol?l.protocol.replace(/:$/,""):"",host:l.host,search:l.search?l.search.replace(/^\?/,""):"",hash:l.hash?l.hash.replace(/^#/,""):"",hostname:l.hostname,port:l.port,pathname:"/"===l.pathname.charAt(0)?l.pathname:"/"+l.pathname}}var e,t=/(msie|trident)/i.test(navigator.userAgent),l=document.createElement("a");return e=n(window.location.href),function(t){var l=o.isString(t)?n(t):t;return l.protocol===e.protocol&&l.host===e.host}}():function(){return function(){return!0}}()},function(n,e,t){"use strict";function o(){this.message="String contains an invalid character"}function l(n){for(var e,t,l=String(n),r="",u=0,c=i;l.charAt(0|u)||(c="=",u%1);r+=c.charAt(63&e>>8-u%1*8)){if((t=l.charCodeAt(u+=.75))>255)throw new o;e=e<<8|t}return r}var i="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";o.prototype=new Error,o.prototype.code=5,o.prototype.name="InvalidCharacterError",n.exports=l},function(n,e,t){"use strict";var o=t(0);n.exports=o.isStandardBrowserEnv()?function(){return{write:function(n,e,t,l,i,r){var u=[];u.push(n+"="+encodeURIComponent(e)),o.isNumber(t)&&u.push("expires="+new Date(t).toGMTString()),o.isString(l)&&u.push("path="+l),o.isString(i)&&u.push("domain="+i),!0===r&&u.push("secure"),document.cookie=u.join("; ")},read:function(n){var e=document.cookie.match(new RegExp("(^|;\\s*)("+n+")=([^;]*)"));return e?decodeURIComponent(e[3]):null},remove:function(n){this.write(n,"",Date.now()-864e5)}}}():function(){return{write:function(){},read:function(){return null},remove:function(){}}}()},function(n,e,t){"use strict";function o(){this.handlers=[]}var l=t(0);o.prototype.use=function(n,e){return this.handlers.push({fulfilled:n,rejected:e}),this.handlers.length-1},o.prototype.eject=function(n){this.handlers[n]&&(this.handlers[n]=null)},o.prototype.forEach=function(n){l.forEach(this.handlers,function(e){null!==e&&n(e)})},n.exports=o},function(n,e,t){"use strict";function o(n){n.cancelToken&&n.cancelToken.throwIfRequested()}var l=t(0),i=t(24),r=t(5),u=t(1);n.exports=function(n){return o(n),n.headers=n.headers||{},n.data=i(n.data,n.headers,n.transformRequest),n.headers=l.merge(n.headers.common||{},n.headers[n.method]||{},n.headers||{}),l.forEach(["delete","get","head","post","put","patch","common"],function(e){delete n.headers[e]}),(n.adapter||u.adapter)(n).then(function(e){return o(n),e.data=i(e.data,e.headers,n.transformResponse),e},function(e){return r(e)||(o(n),e&&e.response&&(e.response.data=i(e.response.data,e.response.headers,n.transformResponse))),Promise.reject(e)})}},function(n,e,t){"use strict";var o=t(0);n.exports=function(n,e,t){return o.forEach(t,function(t){n=t(n,e)}),n}},function(n,e,t){"use strict";n.exports=function(n){return/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(n)}},function(n,e,t){"use strict";n.exports=function(n,e){return e?n.replace(/\/+$/,"")+"/"+e.replace(/^\/+/,""):n}},function(n,e,t){"use strict";function o(n){if("function"!=typeof n)throw new TypeError("executor must be a function.");var e;this.promise=new Promise(function(n){e=n});var t=this;n(function(n){t.reason||(t.reason=new l(n),e(t.reason))})}var l=t(6);o.prototype.throwIfRequested=function(){if(this.reason)throw this.reason},o.source=function(){var n;return{token:new o(function(e){n=e}),cancel:n}},n.exports=o},function(n,e,t){"use strict";n.exports=function(n){return function(e){return n.apply(null,e)}}}])});
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer);
+};
+
+function isBuffer(obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer(obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0));
+}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaults = __webpack_require__(1);
+var utils = __webpack_require__(0);
+var InterceptorManager = __webpack_require__(22);
+var dispatchRequest = __webpack_require__(23);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config.method = config.method.toLowerCase();
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout() {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+})();
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch (e) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while (len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) {
+    return [];
+};
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () {
+    return '/';
+};
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function () {
+    return 0;
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(4);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
+  }
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function encode(val) {
+  return encodeURIComponent(val).replace(/%40/gi, '@').replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      }
+
+      if (!utils.isArray(val)) {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) {
+    return parsed;
+  }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+    }
+  });
+
+  return parsed;
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = utils.isStandardBrowserEnv() ?
+
+// Standard browser envs have full support of the APIs needed to test
+// whether the request URL is of the same origin as current location.
+function standardBrowserEnv() {
+  var msie = /(msie|trident)/i.test(navigator.userAgent);
+  var urlParsingNode = document.createElement('a');
+  var originURL;
+
+  /**
+  * Parse a URL to discover it's components
+  *
+  * @param {String} url The URL to be parsed
+  * @returns {Object}
+  */
+  function resolveURL(url) {
+    var href = url;
+
+    if (msie) {
+      // IE needs attribute set twice to normalize properties
+      urlParsingNode.setAttribute('href', href);
+      href = urlParsingNode.href;
+    }
+
+    urlParsingNode.setAttribute('href', href);
+
+    // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+    return {
+      href: urlParsingNode.href,
+      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+      host: urlParsingNode.host,
+      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+      hostname: urlParsingNode.hostname,
+      port: urlParsingNode.port,
+      pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
+    };
+  }
+
+  originURL = resolveURL(window.location.href);
+
+  /**
+  * Determine if a URL shares the same origin as the current location
+  *
+  * @param {String} requestURL The URL to test
+  * @returns {boolean} True if URL shares the same origin, otherwise false
+  */
+  return function isURLSameOrigin(requestURL) {
+    var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
+    return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
+  };
+}() :
+
+// Non standard browser envs (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return function isURLSameOrigin() {
+    return true;
+  };
+}();
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error();
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+  // initialize result and counter
+  var block, charCode, idx = 0, map = chars;
+  // if the next str index does not exist:
+  //   change the mapping table to "="
+  //   check if d has no fractional digits
+  str.charAt(idx | 0) || (map = '=', idx % 1);
+  // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+  output += map.charAt(63 & block >> 8 - idx % 1 * 8)) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = utils.isStandardBrowserEnv() ?
+
+// Standard browser envs support document.cookie
+function standardBrowserEnv() {
+  return {
+    write: function write(name, value, expires, path, domain, secure) {
+      var cookie = [];
+      cookie.push(name + '=' + encodeURIComponent(value));
+
+      if (utils.isNumber(expires)) {
+        cookie.push('expires=' + new Date(expires).toGMTString());
+      }
+
+      if (utils.isString(path)) {
+        cookie.push('path=' + path);
+      }
+
+      if (utils.isString(domain)) {
+        cookie.push('domain=' + domain);
+      }
+
+      if (secure === true) {
+        cookie.push('secure');
+      }
+
+      document.cookie = cookie.join('; ');
+    },
+
+    read: function read(name) {
+      var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+      return match ? decodeURIComponent(match[3]) : null;
+    },
+
+    remove: function remove(name) {
+      this.write(name, '', Date.now() - 86400000);
+    }
+  };
+}() :
+
+// Non standard browser env (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return {
+    write: function write() {},
+    read: function read() {
+      return null;
+    },
+    remove: function remove() {}
+  };
+}();
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var transformData = __webpack_require__(24);
+var isCancel = __webpack_require__(5);
+var defaults = __webpack_require__(1);
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(config.data, config.headers, config.transformRequest);
+
+  // Flatten headers
+  config.headers = utils.merge(config.headers.common || {}, config.headers[config.method] || {}, config.headers || {});
+
+  utils.forEach(['delete', 'get', 'head', 'post', 'put', 'patch', 'common'], function cleanHeaderConfig(method) {
+    delete config.headers[method];
+  });
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(response.data, response.headers, config.transformResponse);
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return (/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  );
+};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(6);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+/***/ })
+/******/ ]);
+});
 //# sourceMappingURL=axios-request.js.map
