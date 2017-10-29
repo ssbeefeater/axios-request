@@ -4,7 +4,9 @@
   "description": "An Axios handler for making requests with polling, lock and cancel support.",
   "main": "dist/axios-request.js",
   "scripts": {
-    "build": "set NODE_ENV=production & webpack -p",
+    "build:prod": "NODE_ENV=production webpack -p",
+    "build:dev": "NODE_ENV=development && webpack",
+    "build": "yarn run build:dev && yarn run build:prod",
     "test": "nyc --all mocha test/mocha.conf.js test/**/*.test.js test/**/**/*.test.js test/**/**/**/*.test.js",
     "test-watch": "mocha test/mocha.conf.js test/**/*.test.js --watch",
     "cover": "nyc report"
