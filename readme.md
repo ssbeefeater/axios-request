@@ -48,7 +48,7 @@ requestInstance.post(options = {})// sends a post request overriding the above o
 
 requestInstance.cancel() // cancel all requests
 requestInstance.cancel(method = 'get') // cancel get request
-requestInstance.cancel(method = 'get') // cancel post request
+requestInstance.cancel(method = 'post') // cancel post request
 
 // polling requests
 requestInstance.poll(intervalTime = 2000).get(callback = (response) => {
@@ -65,7 +65,7 @@ equestInstance.isPolling(method = 'get') // returns true when polling is enabled
 
 //setters
 
-requestInstance.setOption(options = {}) // changes the instane's options
+requestInstance.setOptions(options = {}) // changes the instane's options
 requestInstance.setUrl(options = {}) // changes the instane's url
 
 ```
