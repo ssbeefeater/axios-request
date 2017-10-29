@@ -65,7 +65,7 @@ equestInstance.isPolling(method = 'get') // returns true when polling is enabled
 
 //setters
 
-requestInstance.setOption(options = {}) // changes the instane's options
+requestInstance.setOptions(options = {}) // changes the instane's options
 requestInstance.setUrl(options = {}) // changes the instane's url
 
 ```
