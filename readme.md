@@ -65,8 +65,8 @@ equestInstance.isPolling(method = 'get') // returns true when polling is enabled
 
 //setters
 
-requestInstance.setOptions(options = {}) // changes the instane's options
-requestInstance.setUrl(options = {}) // changes the instane's url
+requestInstance.setOptions(options = {}) // changes the instance's options
+requestInstance.setUrl(options = {}) // changes the instance's url
 
 ```
 
@@ -161,9 +161,9 @@ Lockable, Cancelable
 ```javascript
 import Request from 'axios-request-handler';
 
- // cacelable
+ // cancelable
 const reviews = new Request('http://example.com/api/reviews', {
-    cacelable:true, //default is true
+    cancelable:true, //default is true
 });
 reviews.get(); // this request will be canceled by the next one
 reviews.get();
@@ -171,7 +171,7 @@ reviews.get();
 // ----------------------
 
 const reviews = new Request('http://example.com/api/reviews', {
-    cacelable:false, //default is true
+    cancelable:false, //default is true
 });
 reviews.get(); // both requests will be executed
 reviews.get();
