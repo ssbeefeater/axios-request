@@ -61,7 +61,7 @@ requestInstance.poll(intervalTime = 2000).get(callback = (response) => {
 
 requestInstance.isPending(method = '') // returns true when a request is on the fly
 requestInstance.isUpdating(method = 'post') // returns true when a request is on the fly after interval request
-equestInstance.isPolling(method = 'get') // returns true when polling is enabled
+requestInstance.isPolling(method = 'get') // returns true when polling is enabled
 
 //setters
 
