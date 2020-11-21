@@ -3,7 +3,7 @@
         "src/**/*.js"
     ],
     "require": [
-        "babel-register"
+        "@babel/register"
     ],
     "reporter": [
         "html",

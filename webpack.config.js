@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const isProd = process.argv.includes('-p');
+const isProd = process.argv.includes('--mode=production');
+
 const config = ({
     context: path.join(__dirname, '/src'),
     entry: [
@@ -38,6 +39,5 @@ if (isProd) {
         sourceMap: true,
     }));
 }
-
 
 module.exports = config;
