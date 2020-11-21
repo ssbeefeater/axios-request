@@ -33,6 +33,7 @@ const requestInstance = new Request(url = '', options = {
     lockable: false, // if true if you try to make a request when there is a pending one, the second will not be executed
     cancelable: true, // if true if you try to make a request when there is a pending one, the first will be canceled and the new will executed
     errorHandler:(error,method) => {} // function for handling the errors
+    axiosInstance: undefined, // custom axios instance
     ...axionOptions, // all the supported options from axios
 })
 
@@ -185,6 +186,32 @@ const reviews = new Request('http://example.com/api/reviews', {
 reviews.get();
 reviews.get(); // this request will not be executed and will throw Promise error;
 ```
+
+Using custom Axios instance
+
+Case you want to reuse an active `axios` instance, this is useful when you are working with JWT and don't want to set Authorization Header again.
+
+```javascript
+import Request from 'axios-request-handler';
+import axiosInstance from './axios-instance'
+
+const products = new Request('http://example.com/api/products', {
+    params: {
+        category: 'keyboards'
+    },
+    axiosInstance
+});
+
+products.get().then(res => (console.log(res.data)));
+
+// the next requests will continue using the custom axios instance
+products.get({
+    params: {
+        category: 'mouses'
+    }
+}).then(res => (console.log(res.data)));
+```
+
 ---
 
 To run tests:
