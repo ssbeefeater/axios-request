@@ -36,7 +36,8 @@ class Request {
             }
         } else {
             Object.keys(this.cancelMethods).forEach(reqMethod => (this.cancelMethods[reqMethod]()));
-            Object.keys(this.timeouts).forEach(reqMethod => (clearTimeout(this.timeouts[reqMethod])));
+            Object.keys(this.timeouts)
+                .forEach(reqMethod => (clearTimeout(this.timeouts[reqMethod])));
         }
         return this;
     }
@@ -50,7 +51,8 @@ class Request {
         if (method) {
             return !!this.pollingInProgress[method];
         }
-        return Object.keys(this.pollingInProgress).some(pollingMethod => this.pollingInProgress[pollingMethod]);
+        return Object.keys(this.pollingInProgress)
+            .some(pollingMethod => this.pollingInProgress[pollingMethod]);
     }
     isUpdating = (method) => {
         if (method) {
@@ -102,8 +104,13 @@ class Request {
         const {
             lockable,
             cancelable,
+            axiosInstance = null,
             ...axiosOption
         } = Object.assign({}, this.options, options);
+
+        const instance = axiosInstance
+          && axiosInstance.constructor === axios.constructor ? axiosInstance : axios;
+
         if (lockable && !updating && this.isPending(method)) {
             return Promise.reject(new Error('Request in progress'));
         }
@@ -112,7 +119,8 @@ class Request {
         }
         this.updating[method] = !!updating;
         this.pending[method] = true;
-        return axios({
+
+        return instance({
             ...axiosOption,
             method,
             url: this.url,
